@@ -65,7 +65,7 @@ Ask your AI assistant things like:
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/moodle-student-mcp.git
+git clone https://github.com/oktayevin/moodle-student-mcp.git
 cd moodle-student-mcp
 npm install --omit=dev
 ```
