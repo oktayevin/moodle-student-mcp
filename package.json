@@ -1,0 +1,14 @@
+{
+  "name": "moodle-student-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Moodle student operations using token authentication",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.1",
+    "express": "^4.21.2"
+  }
+}
