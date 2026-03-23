@@ -102,7 +102,6 @@ Both the **Moodle URL** and **token** are passed per-request via headers — no 
 | Field | Value |
 |---|---|
 | **Server URL** | `http://YOUR_SERVER_IP:3000/sse?moodle_url=https://your-moodle-site.com` |
-| **Auth** | API Key |
 | **API Key** | Your Moodle token |
 
 ### Claude Desktop
