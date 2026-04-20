@@ -350,6 +350,50 @@ function createServer(token, moodleUrl) {
     }
   );
 
+  // Download binary file
+  server.tool(
+    "download_file",
+    "Download a binary file from Moodle (PDF, DOCX, etc.) and return as base64. Use the authenticated URL from get_course_files.",
+    {
+      url: z.string().describe("Authenticated file URL from get_course_files (includes token)"),
+      filename: z.string().describe("Filename for reference (e.g. lecture10.pdf)"),
+    },
+    async ({ url, filename }) => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        const buffer = await response.arrayBuffer();
+        const base64 = Buffer.from(buffer).toString("base64");
+        const mimeType = response.headers.get("content-type") || "application/octet-stream";
+        const sizeKB = Math.round(buffer.byteLength / 1024);
+  
+        return {
+          content: [
+            {
+              type: "resource",
+              resource: {
+                uri: url,
+                mimeType: mimeType,
+                blob: base64,
+              },
+            },
+            {
+              type: "text",
+              text: `Downloaded: ${filename} (${sizeKB} KB, ${mimeType})`,
+            },
+          ],
+        };
+      } catch (err) {
+        return {
+          content: [{ type: "text", text: `Error downloading file: ${err.message}` }],
+          isError: true,
+        };
+      }
+    }
+  );
+
   // 17. Submit text (online text) to an assignment
   server.tool(
     "submit_assignment_text",
